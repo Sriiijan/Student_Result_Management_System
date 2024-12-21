@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <title>Home</title>
+</head>
+<body>
+  <header>
+    <h1>B.P.Poddar Institute of Management and Technology</h1>
+    <p>Approved by AICTE, New Delhi & Affiliated to MAKAUT, WB</p>
+  </header>
+
+  <div class="content">
+    <div class="slideshow-container">
+      <div class="mySlides"><img src="pic_1.webp" alt="Slide 1"></div>
+      <div class="mySlides"><img src="pic_2.webp" alt="Slide 2"></div>
+      <div class="mySlides"><img src="pic_3.webp" alt="Slide 3"></div>
+      <div class="mySlides"><img src="pic_4.webp" alt="Slide 4"></div>
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <div class="text-container">
+      <h1>Results</h1>
+      <button id="studentLogin" onclick="showLogin('Student')">Student Login</button>
+      <button id="teacherLogin" onclick="showLogin('Teacher')">Teacher Login</button>
+    </div>
+  </div>
+
+  <div id="id01" class="modal">
+    <form class="modal-content animate" onsubmit="handleLogin(event)">
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="avatar.png" alt="Avatar" class="avatar">
+      </div>
+  
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" id="username" placeholder="Enter Username" name="uname" required>
+  
+        <label for="psw"><b>Password</b></label>
+        <input type="password" id="password" placeholder="Enter Password" name="psw" required>
+  
+        <!-- Hidden field for role -->
+        <input type="hidden" id="role" name="role">
+  
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    let slideIndex = 0;
+    showSlides();
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1 }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 2000);
+    }
+
+    function showLogin(role) {
+  const modal = document.getElementById('id01');
+  modal.style.display = "block";
+  document.getElementById('role').value = role.toLowerCase(); // Set role to 'teacher' or 'student'
+}
+
+async function handleLogin(event) {
+  event.preventDefault(); // Prevent form submission from reloading the page
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const role = document.getElementById('role').value;
+
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, role }),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      // Redirect to the appropriate dashboard
+      window.location.href = result.redirect;
+    } else {
+      alert(result.message); // Show error message
+    }
+  } catch (error) {
+    console.error('Error logging in:', error);
+    alert('An error occurred. Please try again.');
+  }
+}
+
+// Modal close functionality
+var modal = document.getElementById('id01');
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+  </script>
+</body>
+</html>
