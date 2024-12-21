@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="teacher.css">
+  <title>Teacher Dashboard</title>
+</head>
+<body>
+  <button id="logoutButton">Logout</button>
+  <h1>Teacher Dashboard</h1>
+
+  <!-- Add New Student Form -->
+  <section id="add-student-section">
+    <form id="add-student-form">
+      <h3>Add New Student</h3>
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="text" id="name" placeholder="Name" required />
+
+      <!-- New Subjects and Marks -->
+      <h4>Subjects and Marks</h4>
+      <div id="subjects-container">
+        <div class="subject-mark-entry">
+          <input type="text" placeholder="Subject" class="subject" required />
+          <input type="number" placeholder="Marks" class="marks" required />
+        </div>
+      </div>
+
+      <button type="button" id="add-subject">Add Another Subject</button>
+      <button type="submit">Add Student</button>
+    </form>
+  </section>
+
+  <!-- Table for All Students -->
+  <h3>Student Marks</h3>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Subject</th>
+        <th>Marks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="student-table-body"></tbody>
+  </table>
+
+  <script>
+    const fetchStudents = async () => {
+  try {
+    const response = await fetch('/results?role=teacher');
+    const students = await response.json();
+
+    const tableBody = document.getElementById('student-table-body');
+    tableBody.innerHTML = '';
+
+    students.forEach((student) => {
+      if (Array.isArray(student.subjectsMarks)) {
+        student.subjectsMarks.forEach((subjectMark) => {
+          tableBody.innerHTML += `
+            <tr>
+              <td>${student.student_username}</td>
+              <td>${subjectMark.subject}</td>
+              <td>
+                <input type="number" value="${subjectMark.marks}" 
+                       data-id="${student.id}" 
+                       data-subject="${subjectMark.subject}" 
+                       class="edit-marks">
+              </td>
+              <td>
+                <button class="save-button" 
+                        data-id="${student.id}" 
+                        data-subject="${subjectMark.subject}">Save</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching students:", error);
+  }
+};
+    // Save Updated Marks
+    document.addEventListener('click', async (event) => {
+      if (event.target.classList.contains('save-button')) {
+        const studentId = event.target.dataset.id;
+        const subject = event.target.dataset.subject;
+        const marksInput = document.querySelector(`input[data-id="${studentId}"][data-subject="${subject}"]`);
+        const marks = marksInput.value;
+
+        await fetch('/update-marks', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: studentId, subject, marks }),
+        });
+
+        fetchStudents();
+      }
+    });
+
+    // Add New Student
+    document.getElementById('add-subject').addEventListener('click', () => {
+      const subjectDiv = document.createElement('div');
+      subjectDiv.classList.add('subject-mark-entry');
+      subjectDiv.innerHTML = `
+        <input type="text" placeholder="Subject" class="subject" required />
+        <input type="number" placeholder="Marks" class="marks" required />
+      `;
+      document.getElementById('subjects-container').appendChild(subjectDiv);
+    });
+
+    document.getElementById('add-student-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const name = document.getElementById('name').value;
+
+  const subjectsMarks = [];
+  const subjectElements = document.querySelectorAll('.subject');
+  const marksElements = document.querySelectorAll('.marks');
+
+  subjectElements.forEach((subject, index) => {
+    subjectsMarks.push({
+      subject: subject.value,
+      marks: marksElements[index].value,
+    });
+  });
+
+  const response = await fetch('/add-student', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, name, subjectsMarks }),
+  });
+
+  if (response.ok) {
+    alert('Student added successfully!');
+    fetchStudents(); // Refresh table
+    document.getElementById('add-student-form').reset();
+  } else {
+    alert('Error adding student.');
+  }
+});
+
+    fetchStudents();  // Fetch the students and populate the table when page loads
+
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      window.location.href = "/index.html"; // Redirect to login page
+    });
+  </script>
+</body>
+</html>

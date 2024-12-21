@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+  <button id="logoutButton">Logout</button>
+  <h1 id="welcomeMessage">Welcome</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Marks</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody">
+      <!-- Results will be dynamically inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Extract the username from the query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get("username");
+
+    // Debugging logs to check query string and username extraction
+    console.log("Query String:", window.location.search);
+    console.log("Extracted Username:", username);
+
+    if (!username) {
+      console.error("No username found in the query string");
+      alert("No username found! Redirecting to login.");
+      window.location.href = "/index.html"; // Redirect to login page
+    } else {
+      // Display welcome message with the username
+      document.getElementById("welcomeMessage").innerText = `Welcome, ${username}`;
+
+      // Fetch and display results
+      async function fetchResults() {
+        try {
+          const response = await fetch(`/results?role=student&username=${username}`);
+          if (response.ok) {
+            const results = await response.json();
+            const tableBody = document.getElementById('resultsBody');
+            if (results && results.length > 0) {
+              // Populate the table with results
+              tableBody.innerHTML = results
+                .map((r) => `<tr><td>${r.subject}</td><td>${r.marks}</td></tr>`)
+                .join('');
+            } else {
+              // Show a "no results available" message
+              tableBody.innerHTML = '<tr><td colspan="2">No results available</td></tr>';
+            }
+          } else {
+            alert('Error fetching results.');
+          }
+        } catch (error) {
+          console.error('Error fetching results:', error);
+          alert('Failed to fetch results.');
+        }
+      }
+
+      // Call the fetchResults function
+      fetchResults();
+    }
+
+    // Logout button functionality
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      window.location.href = "/index.html"; // Redirect to login page
+    });
+  </script>
+</body>
+</html>
