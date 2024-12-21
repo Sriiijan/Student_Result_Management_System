@@ -1,0 +1,222 @@
+{
+  "users": [
+    {
+      "username": "teacher1",
+      "password": "pass123",
+      "role": "teacher"
+    },
+    {
+      "username": "teacher2",
+      "password": "pass123",
+      "role": "teacher"
+    },
+    {
+      "username": "RAKESH DE",
+      "password": "pass456",
+      "role": "student"
+    },
+    {
+      "username": "SRIJAN SASMAL",
+      "password": "pass456",
+      "role": "student"
+    },
+    {
+      "username": "RAJARSHI MONDAL",
+      "password": "pass456",
+      "role": "student"
+    },
+    {
+      "username": "SNIGDHA GHOSH",
+      "password": "pass456",
+      "role": "student"
+    },
+    {
+      "username": "SUSHOVAN BARIK",
+      "password": "pass456",
+      "role": "student"
+    }
+  ],
+  "results": [
+    {
+      "id": 1,
+      "student_username": "RAKESH DE",
+      "subjectsMarks": [
+        {
+          "subject": "Software Engineering",
+          "marks": 84
+        },
+        {
+          "subject": "Compiler Design",
+          "marks": 90
+        },
+        {
+          "subject": "Operating Systems",
+          "marks": 78
+        },
+        {
+          "subject": "Object Oriented Programming",
+          "marks": 88
+        },
+        {
+          "subject": "Humanities III",
+          "marks": 92
+        },
+        {
+          "subject": "Artificial Intelligence",
+          "marks": 80
+        },
+        {
+          "subject": "Constitution of India",
+          "marks": 79
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "student_username": "SRIJAN SASMAL",
+      "subjectsMarks": [
+        {
+          "subject": "Software Engineering",
+          "marks": 91
+        },
+        {
+          "subject": "Compiler Design",
+          "marks": 85
+        },
+        {
+          "subject": "Operating Systems",
+          "marks": 80
+        },
+        {
+          "subject": "Object Oriented Programming",
+          "marks": 94
+        },
+        {
+          "subject": "Humanities III",
+          "marks": 77
+        },
+        {
+          "subject": "Artificial Intelligence",
+          "marks": 84
+        },
+        {
+          "subject": "Constitution of India",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "student_username": "RAJARSHI MONDAL",
+      "subjectsMarks": [
+        {
+          "subject": "Software Engineering",
+          "marks": 72
+        },
+        {
+          "subject": "Compiler Design",
+          "marks": 76
+        },
+        {
+          "subject": "Operating Systems",
+          "marks": 85
+        },
+        {
+          "subject": "Object Oriented Programming",
+          "marks": 78
+        },
+        {
+          "subject": "Humanities III",
+          "marks": 91
+        },
+        {
+          "subject": "Artificial Intelligence",
+          "marks": 90
+        },
+        {
+          "subject": "Constitution of India",
+          "marks": 92
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "student_username": "SNIGDHA GHOSH",
+      "subjectsMarks": [
+        {
+          "subject": "Software Engineering",
+          "marks": 80
+        },
+        {
+          "subject": "Compiler Design",
+          "marks": 79
+        },
+        {
+          "subject": "Operating Systems",
+          "marks": 89
+        },
+        {
+          "subject": "Object Oriented Programming",
+          "marks": 76
+        },
+        {
+          "subject": "Humanities III",
+          "marks": 84
+        },
+        {
+          "subject": "Artificial Intelligence",
+          "marks": 92
+        },
+        {
+          "subject": "Constitution of India",
+          "marks": 88
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "student_username": "SUSHOVAN BARIK",
+      "subjectsMarks": [
+        {
+          "subject": "Software Engineering",
+          "marks": 95
+        },
+        {
+          "subject": "Compiler Design",
+          "marks": 79
+        },
+        {
+          "subject": "Operating Systems",
+          "marks": 91
+        },
+        {
+          "subject": "Object Oriented Programming",
+          "marks": 87
+        },
+        {
+          "subject": "Humanities III",
+          "marks": 84
+        },
+        {
+          "subject": "Artificial Intelligence",
+          "marks": 93
+        },
+        {
+          "subject": "Constitution of India",
+          "marks": 84
+        }
+      ]
+    },
+    {
+      "id": 1733231848069,
+      "student_username": "student6",
+      "name": "student6",
+      "subjectsMarks": [
+        {
+          "subject": "Operating System",
+          "marks": 88
+        }
+      ]
+    }
+  ]
+}
